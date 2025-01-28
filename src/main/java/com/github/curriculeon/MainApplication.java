@@ -16,6 +16,7 @@ public class MainApplication {
      * @return a Pair consisting of X,Y values;
      */
     public static INDArray[] prepareTrainingData(String file_path) {
-        return new MultiLayerPerceptionExample().prepareTrainingData(file_path);
+        final MultiLayerPerceptionExample example = new MultiLayerPerceptionExample(file_path, 3);
+        return example.prepareTrainingData();
     }
 }

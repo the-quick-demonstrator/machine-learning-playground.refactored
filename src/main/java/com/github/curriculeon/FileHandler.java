@@ -8,9 +8,16 @@ import java.util.Arrays;
 import java.util.List;
 
 public class FileHandler {
-    public List<String> readWordsFromFile(String file_path) {
+
+    private final String filePath;
+
+    public FileHandler(final String filePath) {
+        this.filePath = filePath;
+    }
+
+    public List<String> readWordsFromFile() {
         List<String> allWordsInFile = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(file_path))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 allWordsInFile.addAll(Arrays.asList(line.split("\\s+")));
