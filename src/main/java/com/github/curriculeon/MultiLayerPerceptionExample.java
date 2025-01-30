@@ -3,10 +3,9 @@ package com.github.curriculeon;
 
 import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.factory.Nd4j;
+import org.nd4j.linalg.indexing.NDArrayIndex;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Map;
+import java.util.*;
 
 public class MultiLayerPerceptionExample {
     private final INDArray tensorX;
@@ -42,14 +41,23 @@ public class MultiLayerPerceptionExample {
             for (int i = 0; i < letters.length; i++) {
                 final String letter = letters[i];
                 final Integer idx = charToIntegerAlphabet.get(letter);
-                final INDArray currentContext = Nd4j.zeros(1, 3); // [0,0,0]
-                final INDArray previousContext = Nd4j.zeros(1, 3); // [0,0,0]
-                final INDArray newContext = Nd4j.zeros(1, 3); // always be from [0:] + idx
+                final INDArray currentContext = Nd4j.zeros(1, this.blockSize); // [0,0,0]
+                final INDArray previousContext = Nd4j.zeros(1, this.blockSize); // [0,0,0]
+                final INDArray newContext = Nd4j.zeros(1, this.blockSize); // always be from [0:] + idx
+                final INDArray slice = tensorX.get(NDArrayIndex.interval(0, blockSize));
+                try (INDArray idxVector = Nd4j.create(Collections.singletonList(slice), 1)) {}
+                final INDArray hstack = Nd4j.hstack(tensorX, slice);
 
-                tensorX.putScalar(0l, 0,2);
+                //                // 4. arr[1,3]=10 - Assigns array element on index [1][3] the value 10
+//                fourByFiveRandomZeroToOne.putScalar(new int[]{1, 3}, 10)
+
+
+                tensorX.putScalar(1,2,5);
                 tensorX.add(currentContext);
                 tensorX.addi(previousContext);
                 tensorX.addi(newContext);
+
+                System.out.println(tensorX);
 
                 System.out.printf("Curr Y: %d, %s\n", idx, letter);
                 // we want to stack [[0,0,0],[0,0,5],[0,5,13]...[13,1,0]]
