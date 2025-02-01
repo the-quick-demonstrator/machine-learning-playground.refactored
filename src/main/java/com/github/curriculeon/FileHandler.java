@@ -16,8 +16,8 @@ public class FileHandler {
     }
 
     public List<String> readWordsFromFile() {
-        List<String> allWordsInFile = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+        final List<String> allWordsInFile = new ArrayList<>();
+        try (final BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 allWordsInFile.addAll(Arrays.asList(line.split("\\s+")));

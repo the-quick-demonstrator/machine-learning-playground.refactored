@@ -1,12 +1,12 @@
 package com.github.curriculeon;
 
-import org.nd4j.linalg.api.ndarray.INDArray;
+import java.util.List;
 
 public class MainApplication {
     public static void main(String[] args) {
         final String resourcesDirectory = System.getProperty("user.dir") + "/src/main/resources";
         final String filePath = resourcesDirectory + "/names.txt";
-        prepareTrainingData(filePath);
+        System.out.println(prepareTrainingData(filePath));
     }
 
     /**
@@ -15,8 +15,8 @@ public class MainApplication {
      * @param file_path the file to read data from;
      * @return a Pair consisting of X,Y values;
      */
-    public static INDArray[] prepareTrainingData(String file_path) {
+    public static List<InputSequence> prepareTrainingData(String file_path) {
         final MultiLayerPerceptionExample example = new MultiLayerPerceptionExample(file_path, 3);
-        return example.prepareTrainingData();
+        return example.getTrainingData();
     }
 }
